@@ -1,0 +1,8 @@
+---
+- name: "Generation du docker-compose file"
+  template:
+    src: "docker-compose-odoo.yml.j2"
+    dest: /home/{{ ansible_user }}/docker-compose-odoo.yml
+
+- name: "Déploiement du docker-compose-odoo.yml"
+  command: "docker-compose -f /home/{{ ansible_user }}/docker-compose-odoo.yml up -d"

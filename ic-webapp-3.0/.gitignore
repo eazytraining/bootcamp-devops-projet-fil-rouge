@@ -1,0 +1,19 @@
+# Vagrant file
+.vagrant
+# fichiers temporaires de la gamme office
+~*
+# répertoire partargé avec les VMs
+shared
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+*/.terraform.lock.hcl
+
+# Crash log files
+crash.log
+crash.*.log
+

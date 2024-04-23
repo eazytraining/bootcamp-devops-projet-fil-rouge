@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+    ic-webapp:
+        container_name: ic-webapp
+        ports:
+            - "8080:8080"
+        environment:
+            - "ODOO_URL=http://${HOST_IP}:8069/"
+            - "PGADMIN_URL=http://${HOST_IP}:5050/"
+        image: 'choco1992/ic-webapp:v1.0'
+        networks:
+            - ic_network_webapp
+
+networks:
+    ic_network_webapp:
+      driver: bridge
+      name: ic_network_webapp

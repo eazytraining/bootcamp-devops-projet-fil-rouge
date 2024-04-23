@@ -1,0 +1,13 @@
+---
+- name: "Generation du docker-compose file"
+  template:
+    src: "docker-compose-pgadmin.yml.j2"
+    dest: /home/{{ ansible_user }}/docker-compose-pgadmin.yml
+
+- name: "Generation du fichier de conf initial de pgadmin "
+  template:
+    src: "servers.json.j2"
+    dest: /home/{{ ansible_user }}/servers.json
+
+- name: "Déploiement du docker-compose-pgadmin.yml"
+  command: "docker-compose -f /home/{{ ansible_user }}/docker-compose-pgadmin.yml up -d"

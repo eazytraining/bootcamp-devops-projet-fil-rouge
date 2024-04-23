@@ -1,0 +1,3 @@
+ODOO_URL: https://hub.docker.com/
+PGADMIN_URL: https://snyk.io/
+version: 1.0

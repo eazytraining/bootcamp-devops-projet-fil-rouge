@@ -1,0 +1,7 @@
+---
+- hosts: ic_webapp:ic_webapp_dev
+  become: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3  
+  roles:
+    - { role: ic-webapp}

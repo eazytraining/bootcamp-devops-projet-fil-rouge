@@ -1,0 +1,5 @@
+---
+- hosts: prod:dev
+  become: true
+  roles:
+    - { role: pgadmin_role}

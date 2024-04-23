@@ -1,0 +1,16 @@
+# Lancement de pgadmin 
+- name : "create ic-webapp network"
+  docker_network:
+    name: "{{ ic_webapp_network }}"
+
+- name : "Launch ic-webapp container"
+  docker_container:
+    name: "{{ ic_webapp_container }}"
+    image: "{{ ic_webapp_image }}"
+    ports:
+      - "{{ ic_webapp_port }}:8080"
+    env:
+      ODOO_URL: "{{ odoo_url }}"
+      PGADMIN_URL: "{{ pgadmin_url }}"
+    networks:
+      - name: "{{ ic_webapp_network }}"

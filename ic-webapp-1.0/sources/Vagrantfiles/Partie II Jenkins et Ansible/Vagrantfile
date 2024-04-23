@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+    config.vm.define "jenkins" do |jenkins|
+      jenkins.vm.box = "geerlingguy/centos7"
+      jenkins.vm.network "private_network", type: "static", ip: "192.168.99.10"
+      jenkins.vm.hostname = "jenkins"
+      jenkins.vm.provider "virtualbox" do |v|
+        v.name = "jenkins"
+        v.memory = 2048
+        v.cpus = 2
+      end
+      jenkins.vm.provision :shell do |shell|
+        shell.path = "install_jenkins.sh"
+      end
+    end
+
+    app_servers=2
+    ram_app_servers=2048
+    cpu_app_servers=2
+    (1..app_servers).each do |i|
+      config.vm.define "app_servers#{i}" do |app_servers|
+        app_servers.vm.box = "geerlingguy/centos7"
+        app_servers.vm.network "private_network", type: "static", ip: "192.168.99.1#{i}"
+        app_servers.vm.hostname = "appservers#{i}"
+        app_servers.vm.provider "virtualbox" do |v|
+          v.name = "app_servers#{i}"
+          v.memory = ram_app_servers
+          v.cpus = cpu_app_servers
+        end
+        app_servers.vm.provision :shell do |shell|
+          shell.path = "update_app_server.sh"
+        end
+      end
+    end
+end

@@ -1,0 +1,13 @@
+---
+# defaults file for ic-webapp
+# Lancement de pgadmin 
+ansible_python_interpreter: /usr/bin/python3
+ic_webapp_container: ic-webapp
+ic_webapp_image: "{{ docker_id }}/ic-webapp:v1.0"
+ic_webapp_port: 8000
+odoo_url: "http://{{ host_odoo_ip }}:8069"
+pgadmin_url: "http://{{ host_pgadmin_ip }}:5050"
+ic_webapp_network: ic_network_webapp
+host_pgadmin_ip: "192.168.99.12"
+host_odoo_ip: "192.168.99.11"
+docker_id : choco1992

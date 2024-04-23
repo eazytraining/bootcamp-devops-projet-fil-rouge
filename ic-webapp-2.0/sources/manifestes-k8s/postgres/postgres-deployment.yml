@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+    env: prod
+  namespace: ic-webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - image: postgres:10
+        name: postgres
+        env:
+        - name: POSTGRES_DB
+          value: postgres
+        - name: POSTGRES_USER
+          value: toto
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres
+              key: POSTGRES_PASSWORD
+        ports:
+        - containerPort: 5432
+          name: postgres
+        volumeMounts:
+        - name: pg-data
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: pg-data
+        hostPath:
+          path: /data_k8s/postgres

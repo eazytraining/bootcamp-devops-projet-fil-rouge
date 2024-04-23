@@ -1,0 +1,8 @@
+# Vagrant file
+.vagrant
+# fichiers temporaires de la gamme office
+~*
+# répertoire partargé avec les VMs
+shared
+# fichiers sauvegardé
+*.save

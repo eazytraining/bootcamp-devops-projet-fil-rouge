@@ -1,0 +1,23 @@
+version: '3.3'
+services:
+    pgadmin:
+        container_name: pgadmin
+        image: dpage/pgadmin4
+        networks:
+            - ic_network_pgadmin
+        environment:
+            - 'PGADMIN_DEFAULT_EMAIL=odoo@eazytraining.fr'
+            - 'PGADMIN_DEFAULT_PASSWORD=odoo_pgadmin_password'
+        ports:
+            - "5050:80"
+        volumes:
+            - ${PWD}/servers.json:/pgadmin4/servers.json
+            - 'pgadmin_data:/var/lib/pgadmin'
+
+
+volumes:
+    pgadmin_data:
+networks:
+    ic_network_pgadmin:
+      driver: bridge
+      name: ic_network_pgadmin

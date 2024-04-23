@@ -1,0 +1,13 @@
+FROM python:3.6-alpine
+LABEL maintainer="ULRICH MONJI"
+WORKDIR /opt
+RUN  pip install flask
+ADD . /opt/
+VOLUME /opt
+EXPOSE 8080
+ENV ODOO_URL="https://www.odoo.com/"
+ENV PGADMIN_URL="https://www.pgadmin.org/"
+RUN export ODOO_URL=$( awk 'NR==1 {print $2}' /opt/releases.txt ) &&\
+    export PGADMIN_URL=$( awk 'NR==1 {print $2}' /opt/releases.txt )
+ENTRYPOINT ["python"]
+CMD [ "app.py" ]

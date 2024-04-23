@@ -1,0 +1,23 @@
+version: '3.3'
+services:
+    {{ pgadmin_service_name }}:
+        container_name: {{ pgadmin_container_name }}
+        image: dpage/pgadmin4
+        networks:
+            - {{ pgadmin_network }}
+        environment:
+            - 'PGADMIN_DEFAULT_EMAIL={{ pg_admin_email }}'
+            - 'PGADMIN_DEFAULT_PASSWORD={{ pg_admin_password }}'
+        ports:
+            - "5050:80"
+        volumes:
+            - ${PWD}/servers.json:/pgadmin4/servers.json
+            - '{{ pgadmin_data_volume }}:/var/lib/pgadmin'
+
+
+volumes:
+    {{ pgadmin_data_volume }}:
+networks:
+    {{ pgadmin_network }}:
+      driver: bridge
+      name: {{ pgadmin_network }}

@@ -1,9 +1,8 @@
 # PROJET FINAL DEVOPS: CORRECTION
 
-## **1) ic-webapp-1.0 : Docker et Kubernetes**
+## **1) ic-webapp-1.0 : Docker**
 
 ### **Conteneurisation de l’application web.**
-### **Déploiement des différentes applications dans un cluster Kubernetes.**
 
 ## **2) ic-webapp-2.0** 
 
@@ -15,4 +14,4 @@
 
 ### **b. Pipeline CI/CD avc JENKINS, ANSIBLE et Terraform pour AWS** 
 
-### **c. Déploiement des différentes applications dans un cluster kubernetes**
+### **c. Déploiement des différentes applications dans un cluster KUBERNETES**

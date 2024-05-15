@@ -1,11 +1,11 @@
 # Etapes à suivre
-Ce petit tuto explique progressivement  comment mettre en oeuvre le prpojet fil rouge
+Ce petit tuto explique progressivement  comment mettre en oeuvre le projet fil rouge
 
 ## Prérequis
 
 - Avoir **Virtualbox** et **Vagrant** sur son poste de travail afin de provisionner le lab en local
 
-## Partie I : Build, test (**docker**) et déploiement l'application (**kubernetes**)
+## Partie I : Build et Test avec **Docker**
 
 ### Build, test et push de l'image Docker
 #### Variables utilisées dans la documentation : *à adapter à votre cas*
@@ -36,7 +36,7 @@ Prendre [celui ci](https://github.com/diranetafen/cursus-devops/tree/master/vagr
 > cd ic-webapp
 #### Lancer le build de l'image et tester le fonctionnement du conteneur :
 > docker build --no-cache -f ./sources/app/${DOCKERFILE_NAME} -t $IMAGE_NAME:$IMAGE_TAG ./sources/app
->docker run -d --name test-ic-webapp -p ${APP_EXPOSED_PORT}:8080 ${DOCKERHUB_ID}/$IMAGE_NAME:$IMAGE_TAG
+> docker run -d --name test-ic-webapp -p ${APP_EXPOSED_PORT}:8080 ${DOCKERHUB_ID}/$IMAGE_NAME:$IMAGE_TAG
 #### RDV dans le navigateur de votre machine, taper http://**<votre_ip_machine>**:**${APP_EXPOSED_PORT}** pour finaliser le test
 #### Supprimer le conteneur une fois le test validé et pousser l'image dans dockerhub
 > docker rm -f test-ic-webapp
@@ -66,21 +66,6 @@ Du coup la variable d'en HOST_IP doit contenir cette IP machine. Sur notre infra
 #### RDV dans le navigateur de votre machine, taper http://**<votre_ip_machine>**:**8080** pour finaliser le test
 
 
-### Déploiement sur K8S
-#### On créé les répertoires devant servir de volumes et on set les droits. Pour des besoins de faciliter, on va attribuer tous les droits sur ces foldes
-> sudo mkdir -p /data_k8s/lib-odoo /data_k8s/pgadmin4 /data_k8s/postgres /data_k8s/addons /data_k8s/config
-> sudo chmod 777 -R  /data_k8s/lib-odoo /data_k8s/pgadmin4 /data_k8s/postgres /data_k8s/addons /data_k8s/config
-#### Aller dans le dossier manifestes-k8s et lancer les manifestes
-> cd ../manifestes-k8s
-> kubectl apply -f ic-webapp/
-> kubectl apply -f postgres/
-> kubectl apply -f odoo/
-> kubectl apply -f pg-admin/
-#### RDV dans le navigateur de votre machine, taper http://**<votre_ip_machine>**:**30080** pour finaliser le test
-
-
-
-
 ## Partie II : CI avec Jenkins
 
 #### Lancer le Jenkins
@@ -107,18 +92,30 @@ Une fois le token récupérer, se connecter a l'IHM Jenkins sur le port 8080 et 
 
 - Trigger  :  Scrutation de l'outil (**\* \* \* \* \***) ou webhook (A configurer dans Github)
 
-Pipelne : 
+Pipeline : 
     - Definition : Pipeline script from SCM > GIT
         - Branche : */main
         - Script Path : Jenkinsfile
 
 
-
-
 ## Partie III : CD avec Jenkins et Ansible
-#### Installation de Ansible sur le servuer Minikube
+#### Installation de Ansible sur le serveur Minikube
 > yum -y install epel-release
 > yum install -y python3
 > curl -sS https://bootstrap.pypa.io/pip/3.6/get-pip.py | sudo python3
 > /usr/local/bin/pip3 install ansible
 > sudo yum install -y sshpass
+
+
+## Partie IV : Déploiement des différentes applications dans un cluster **kubernetes**
+### Déploiement sur K8S
+#### On créé les répertoires devant servir de volumes et on set les droits. Pour des besoins de faciliter, on va attribuer tous les droits sur ces folders
+> sudo mkdir -p /data_k8s/lib-odoo /data_k8s/pgadmin4 /data_k8s/postgres /data_k8s/addons /data_k8s/config
+> sudo chmod 777 -R  /data_k8s/lib-odoo /data_k8s/pgadmin4 /data_k8s/postgres /data_k8s/addons /data_k8s/config
+#### Aller dans le dossier manifestes-k8s et lancer les manifestes
+> cd ../manifestes-k8s
+> kubectl apply -f ic-webapp/
+> kubectl apply -f postgres/
+> kubectl apply -f odoo/
+> kubectl apply -f pg-admin/
+#### RDV dans le navigateur de votre machine, taper http://**<votre_ip_machine>**:**30080** pour finaliser le test

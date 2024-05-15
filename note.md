@@ -14,3 +14,5 @@
 ### **a. Pipeline CI/CD à l'aide de JENKINS et de ANSIBLE** 
 
 ### **b. Pipeline CI/CD avc JENKINS, ANSIBLE et Terraform pour AWS** 
+
+### **c. Déploiement des différentes applications dans un cluster kubernetes**

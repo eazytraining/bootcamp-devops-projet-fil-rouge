@@ -1,5 +1,0 @@
----
-- hosts: odoo:odoo_dev
-  become: true
-  roles:
-    - { role: odoo_role}
